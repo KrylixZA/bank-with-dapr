@@ -2,9 +2,13 @@ name: Docker
 
 on:
   push:
-    branches: [ "*" ]
+    branches:
+      - '*'
+    paths:
+      - '**/Dockerfile'
   pull_request:
-    branches: [ "*" ]
+    branches:
+      - '*'
 
 jobs:
   build:
