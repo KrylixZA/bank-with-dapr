@@ -22,7 +22,7 @@ func GetAccountsForUser(c *gin.Context) {
 		return
 	}
 
-	if accounts == nil || len(accounts) == 0 {
+	if len(accounts) == 0 {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": notFoundErrorMessage})
 		return
 	}
