@@ -6,4 +6,5 @@ const (
 	Cheque AccountType = iota
 	Savings
 	Credit
+	Business
 )
