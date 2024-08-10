@@ -1,0 +1,67 @@
+services:
+  ###################################
+  #     dapr placement service      #
+  ###################################
+  placement:
+    image: daprio/placement:latest
+    container_name: placement
+    command: [ "./placement", "--port", "50006" ]
+    ports:
+      - 50006:50006
+    networks:
+      - bank-network
+
+  ###################################
+  #             redis               #
+  ###################################
+  redis:
+    image: redis:6
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - bank-network
+
+  ###################################
+  #           rabbitmq              #
+  ###################################
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - bank-network
+
+  ###################################
+  # accounts service + dapr sidecar #
+  ###################################
+  accounts-service:
+    image: bank-with-dapr/accounts:dev
+    container_name: accounts-service
+    build:
+      context: .
+      dockerfile: cmd/accounts/Dockerfile
+      tags:
+        - bank-with-dapr/accounts:dev
+    ports:
+      - 8080:8080
+    networks:
+      - bank-network
+
+  accounts-service-dapr:
+    image: daprio/daprd:latest
+    command: [ "./daprd",
+               "--app-id", "accounts-service",
+               "--app-port", "8080",
+               "--placement-host-address", "placement:50006",
+               "--components-path", "/components" ]
+    volumes:
+      - ./dapr/:/components
+    depends_on:
+      - placement
+    network_mode: "service:accounts-service"
+
+networks:
+  bank-network: null

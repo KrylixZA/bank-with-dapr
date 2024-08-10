@@ -1,4 +1,4 @@
-package accounts
+package app
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 
 const state = "accounts-state"
 const validationFailureErrorMessage = "model validation failure while attempting to map request to type"
-const notFoundErrorMessage = "reesource not found"
+const notFoundErrorMessage = "resource not found"
 const internalServerErrorMessage = "an environmental, non-specific error has occurred"
 
 func GetAccountsForUser(c *gin.Context) {

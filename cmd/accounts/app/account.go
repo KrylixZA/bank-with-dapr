@@ -1,4 +1,4 @@
-package accounts
+package app
 
 type account struct {
 	AccountID   string      `json:"accountId"`

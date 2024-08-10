@@ -1,4 +1,4 @@
-package accounts
+package app
 
 type AccountType int
 

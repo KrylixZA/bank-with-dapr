@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/KrylixZA/bank-with-dapr/accounts"
+	accounts "github.com/KrylixZA/bank-with-dapr/cmd/accounts/app"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,5 +10,8 @@ func main() {
 	router.GET("/accounts/:userId", accounts.GetAccountsForUser)
 	router.POST("/accounts/:userId", accounts.CreateAccountForUser)
 
-	router.Run("localhost:8080")
+	err := router.Run("localhost:8080")
+	if err != nil {
+		panic(err)
+	}
 }
