@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/KrylixZA/bank-with-dapr/pkg/models"
 	"net/http"
 
 	dapr "github.com/dapr/go-sdk/client"
@@ -32,7 +33,7 @@ func GetAccountsForUser(c *gin.Context) {
 
 func CreateAccountForUser(c *gin.Context) {
 	userId := c.Param("userId")
-	var account account
+	var account models.Account
 
 	accounts, err := getAccountsForUser(userId, c)
 	if err != nil {
@@ -54,7 +55,7 @@ func CreateAccountForUser(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, nil)
 }
 
-func getAccountsForUser(userId string, c *gin.Context) (accounts []account, err error) {
+func getAccountsForUser(userId string, c *gin.Context) (accounts []models.Account, err error) {
 	client, err := dapr.NewClient()
 	if err != nil {
 		return nil, err
@@ -74,7 +75,7 @@ func getAccountsForUser(userId string, c *gin.Context) (accounts []account, err 
 	return accounts, nil
 }
 
-func saveAccountsForUser(userId string, accounts []account, c *gin.Context) (err error) {
+func saveAccountsForUser(userId string, accounts []models.Account, c *gin.Context) (err error) {
 	client, err := dapr.NewClient()
 	if err != nil {
 		return err
