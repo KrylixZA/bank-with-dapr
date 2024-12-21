@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN go build -o /dist cmd/accounts/main.go
+RUN go build -o /dist cmd/transactions/main.go
 
 # Expose the application port
 EXPOSE 8080
